@@ -5,34 +5,37 @@
         const response = await fetch('https://api.github.com/repos/aglide100/d3-graph-sample/contents/');
         const data = await response.json();
         let htmlString = '<ul>';
+        let subForler;
         for (let file of data) {
-           
-            if (data.name.indexOf(".md") ){
-                continue;
-            }
-
-            if (data.name.indexOf(".gitignore")) {
-                continue;
-            }
-
-            if (data.name.indexOf(".htm")) {
+            
+        
+            if (file.name.indexOf(".htm")) {
+                
                 htmlString += `<li><a href="${file.path}">${file.name}</a></li>`;
-                continue;
-            }
-
-            if (data.name.indexOf(".html")) {
+            } else if (file.name.indexOf(".html")) {
                 htmlString += `<li><a href="${file.path}">${file.name}</a></li>`;
-                continue;
+                
+            } else if ((file.name.indexOf(".md")) || (file.name.indexOf(".gitignore"))) {
+                    
+                
+            } else {
+
+                    // const responseInside = await fetch('https://api.github.com/repos/aglide100/d3-graph-sample/contents/'+ file.name);
+                    // const InsideData = await responseInside.json();
+
+                    
+                    // let insideHTM;
+                    // for (let insideFile of InsideData) {
+                    //     console.log(insideFile)
+                    //     insideHTM += `<li><a href="${insideFile.path}">${insideFile.name}</a></li>`;
+                    // }
+                
+                    // htmlString += insideHTM;
+
+                    
             }
 
-            const responseInside = await fetch('https://api.github.com/repos/aglide100/d3-graph-sample/contents/'+ file.name);
-            const InsideData = await responseInside.json();
-            let insideHTM;
-            for (let file of InsideData) {
-                insideHTM += `<li><a href="${file.path}">${file.name}</a></li>`;
-            }
-
-            htmlString += insideHTM;
+            
 
         }
         htmlString += '</ul>';
